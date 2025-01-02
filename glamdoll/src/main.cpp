@@ -11,12 +11,14 @@
 // GLOBALS
 // -----------------------------------------------------------------------------
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+const int INIT_WINDOW_SIZE = 600;
 
 // -----------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 // -----------------------------------------------------------------------------
+
+void framebuffer_size_callback(GLFWwindow*, int, int);
+void window_pos_callback(GLFWwindow*, int, int);
 
 void resizeViewport(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
@@ -43,7 +45,7 @@ int main()
 #endif
 
     // Create window object and verify it loaded correctly
-    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "glamdoll", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(INIT_WINDOW_SIZE, INIT_WINDOW_SIZE, "glamdoll", NULL, NULL);
 
     if (window == NULL)
     {
@@ -58,7 +60,8 @@ int main()
     // Set callback functions
     // -------------------------------------------------------------------------
 
-    glfwSetFramebufferSizeCallback(window, resizeViewport);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetWindowPosCallback(window, window_pos_callback);
 
     // -------------------------------------------------------------------------
     // Load and verify GLAD (OpenGL function pointers)
@@ -334,12 +337,7 @@ int main()
 
         // ===== Projection =====
 
-        int fbWidth, fbHeight;
-        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-
-        float aspectRatio = (float)fbWidth / (float)fbHeight;
-
-        glm::mat4 projectionMatrix = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 1000.f);
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(70.f), 1.0f, 0.1f, 1000.f);
 
         // Set projection matrix
         shader.setMat4("uProjectionMatrix", projectionMatrix);
@@ -370,14 +368,27 @@ int main()
 // -----------------------------------------------------------------------------
 
 // Adjust viewport on framebuffer resize
-void resizeViewport(GLFWwindow* window, int width, int height)
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    int newWidth = width;
-    int newHeight = height;
+    resizeViewport(window, width, height);
+}
 
-    std::cout << newWidth << ", " << newHeight << std::endl;
+void window_pos_callback(GLFWwindow* window, int xpos, int ypos)
+{
+    int fbWidth, fbHeight;
+    glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
 
-    glViewport(0, 0, newWidth, newHeight);
+    resizeViewport(window, fbWidth, fbHeight);
+}
+
+void resizeViewport(GLFWwindow* window, int fbWidth, int fbHeight)
+{
+    int minDimension = fbWidth < fbHeight ? fbWidth : fbHeight;
+
+    int originX = (fbWidth - minDimension) / 2;
+    int originY = (fbHeight - minDimension) / 2;
+
+    glViewport(originX, originY, minDimension, minDimension);
 }
 
 // Process keyboard input
