@@ -1,15 +1,14 @@
 # glamdoll
 
-**glamdoll** is a C++ OpenGL starter project derivative of Joey de Vries' source
-code at [LearnOpenGL.com](https://learnopengl.com/) and Dr. Mike Bailey's sample
-project code for [CS 450](https://web.engr.oregonstate.edu/~mjb/cs550/) at
-Oregon State University.
+**glamdoll** is a C++ OpenGL starter project based on Joey de Vries' source code
+at [LearnOpenGL.com](https://learnopengl.com/) and Dr. Mike Bailey's project
+sample for [CS 450](https://web.engr.oregonstate.edu/~mjb/cs550/) at Oregon
+State University.
 
 ## Dependencies
 
-Dependencies are imported and built automatically at build-time managed by
-CMake's `FetchContent` module. When you build glamdoll, CMake retrieves the
-dependencies' source code, and builds any required files/libraries.
+Dependencies are managed by CMake's `FetchContent` module, which retrieves the
+external source code and builds the required files and libraries automatically.
 
 | Dependency                              | Description                                                                                                                        |
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -36,10 +35,10 @@ dependencies' source code, and builds any required files/libraries.
     ```
 
 4. Run executable.
-   
-   ```
-   Debug > Run Without Debugging
-   ```
+
+    ```
+    Debug > Run Without Debugging
+    ```
 
 ### Mac (command line)
 
