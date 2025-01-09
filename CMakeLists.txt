@@ -35,15 +35,15 @@ add_executable(glamdoll)
 
 # Locate C/C++ source files
 target_sources(glamdoll PRIVATE
-  glamdoll/src/main.cpp
-  glamdoll/src/shader.cpp
+  src/main.cpp
+  src/shader.cpp
   ${glad_SOURCE_DIR}/src/glad.c
 )
 
 # Copy shader folder into to the build directory
 add_custom_target(copy_files ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/glamdoll/shaders/
+        ${CMAKE_SOURCE_DIR}/shaders/
         ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
 )
 
