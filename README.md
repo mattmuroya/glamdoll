@@ -19,15 +19,40 @@ dependencies' source code, and builds any required files/libraries.
 
 ## Getting started
 
+### Windows (Visual Studio)
+
 1. Clone repository.
 
     ```sh
     git clone https://github.com/mattmuroya/glamdoll.git
     ```
 
-2. Move to `build` directory.
+2. Open project folder in Visual Studio.
+
+3. Build project.
+
+    ```
+    Build > Build All
+    ```
+
+4. Run executable.
+   
+   ```
+   Debug > Run Without Debugging
+   ```
+
+### Mac (command line)
+
+1. Clone repository.
 
     ```sh
+    git clone https://github.com/mattmuroya/glamdoll.git
+    ```
+
+2. Create and move to `build` directory.
+
+    ```sh
+    mkdir build
     cd build
     ```
 
@@ -37,13 +62,13 @@ dependencies' source code, and builds any required files/libraries.
     cmake ..
     ```
 
-4. Build executable.
+4. Build project.
 
     ```sh
     make
     ```
 
-5. Run program.
+5. Run executable.
 
     ```sh
     ./glamdoll

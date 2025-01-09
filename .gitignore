@@ -1,3 +1,7 @@
+# Build output directories
+build/
+out/
+
 # CMake build files
 CMakeFiles/
 CMakeCache.txt
@@ -7,3 +11,4 @@ Makefile
 
 # IDE files
 .vscode/
+.vs/

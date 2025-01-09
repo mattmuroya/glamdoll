@@ -44,7 +44,7 @@ target_sources(glamdoll PRIVATE
 add_custom_target(copy_files ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/glamdoll/shaders/
-        ${CMAKE_BINARY_DIR}/
+        ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
 )
 
 # Link external library binaries
