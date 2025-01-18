@@ -14,11 +14,10 @@
 class Shader
 {
 public:
-    // Shader attributes
-    unsigned int id;
+    GLuint id; // Shader program handle
 
-    // Constructor
-    Shader(const char* vertSourceFilePath, const char* fragSourceFilePath)
+    // Read, compile, and link source code
+    void create(const char* vertSourceFilePath, const char* fragSourceFilePath)
     {
         // ---------------------------------------------------------------------
         // Get shader source code from file
@@ -67,7 +66,7 @@ public:
         // Compile and link
         // ---------------------------------------------------------------------
 
-        unsigned int vertexShader, fragmentShader;
+        GLuint vertexShader, fragmentShader;
 
         // Create shader
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -134,7 +133,7 @@ public:
     }
 
 private:
-    void verifyShaderCompile(unsigned int handle, const char* type)
+    void verifyShaderCompile(GLuint handle, const char* type)
     {
         int  success;
         char infoLog[512];
@@ -152,7 +151,7 @@ private:
         }
     }
 
-    void verifyProgramLink(unsigned int handle)
+    void verifyProgramLink(GLuint handle)
     {
         int  success;
         char infoLog[512];

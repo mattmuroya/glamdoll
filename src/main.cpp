@@ -85,7 +85,8 @@ int main()
     // Initialize shaders
     // -------------------------------------------------------------------------
 
-    Shader shader("shader.vert", "shader.frag");
+    Shader shader;
+    shader.create("shader.vert", "shader.frag");
 
     // -------------------------------------------------------------------------
     // Initialize vertex buffer and array objects
