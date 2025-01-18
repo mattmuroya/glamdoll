@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "shader.cpp"
+#include "vbo.cpp"
+#include "vao.cpp"
 
 // -----------------------------------------------------------------------------
 // GLOBALS
@@ -239,54 +241,16 @@ int main()
         0.0f, -1.0f,  0.0f
     };
 
-    unsigned int VAO, vertexBuffer, colorBuffer, normalBuffer;
+    VertexBufferObject vertexVbo, colorVbo, normalVbo;
+    VertexArrayObject vao;
 
-    // Create and bind vertex array object
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    vertexVbo.upload(sizeof(vertices), vertices);
+    colorVbo.upload(sizeof(colors), colors);
+    normalVbo.upload(sizeof(normals), normals);
 
-    // Create, bind, and populate vertex buffer objects
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(
-        0,                 // Attrib position 0 (for shader `in` variable)
-        3,                 // Number of array elements per attribute (e.g. three components for each vertex)
-        GL_FLOAT,          // Component type
-        GL_FALSE,          // Whether to normalize
-        3 * sizeof(float), // Stride (distance between starting bytes of consecutive attributes)
-        (void*)0 // Offset of first attribute in buffer
-    );
-    glEnableVertexAttribArray(0);
-
-    glGenBuffers(1, &colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-    glVertexAttribPointer(
-        1,
-        3,
-        GL_FLOAT,
-        GL_FALSE,
-        3 * sizeof(float),
-        (void*)0
-    );
-    glEnableVertexAttribArray(1);
-
-    glGenBuffers(1, &normalBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
-    glVertexAttribPointer(
-        2,
-        3,
-        GL_FLOAT,
-        GL_FALSE,
-        3 * sizeof(float),
-        (void*)0
-    );
-    glEnableVertexAttribArray(2);
-
-    // Unbind vertex array object
-    glBindVertexArray(0);
+    vao.add(vertexVbo, 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+    vao.add(colorVbo, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+    vao.add(normalVbo, 2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
 
     // -------------------------------------------------------------------------
     // Render loop
@@ -304,7 +268,7 @@ int main()
         shader.use();
 
         // Bind array
-        glBindVertexArray(VAO);
+        vao.bind();
 
         // ===== Model =====
 
