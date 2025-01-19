@@ -1,57 +1,37 @@
-#ifndef VERTEXARRAYOBJECT_H
-#define VERTEXARRAYOBJECT_H
+#include "vao.h"
 
-#include <iostream>
-
-#include <glad/glad.h>
-
-#include "vbo.cpp"
-
-class VertexArrayObject
+VertexArrayObject::VertexArrayObject()
 {
-public:
-    GLuint id; // Vertex attribute array handle
+    glGenVertexArrays(1, &id);
+}
 
-    // Constructor
-    VertexArrayObject()
-    {
-        glGenVertexArrays(1, &id);
-    }
+VertexArrayObject::~VertexArrayObject()
+{
+    glDeleteVertexArrays(1, &id);
+}
 
-    // Destructor
-    ~VertexArrayObject()
-    {
-        glDeleteVertexArrays(1, &id);
-    }
-
-    // Bind this vertex array object
-    void bind()
-    {
-        glBindVertexArray(id);
-    };
-
-    // Unbind this vertex array object
-    void unbind()
-    {
-        glBindVertexArray(0);
-    }
-
-    // Attach a vertex buffer object to this vertex array object
-    void add(
-        VertexBufferObject& vbo, // VBO to attach
-        GLuint index,            // Attribute position (for shader `in`)
-        GLint size,              // Number of array elements per attribute
-        GLenum type,             // Array element type
-        GLboolean normalized,    // Whether to normalize
-        GLsizei stride,          // Distance between starting bytes of consecutive attributes
-        const GLvoid* offset)    // Offset of first attribute in buffer
-    {
-        this->bind();
-        vbo.bind();
-        glVertexAttribPointer(index, size, type, normalized, stride, offset);
-        glEnableVertexAttribArray(index);
-        this->unbind();
-    }
+void VertexArrayObject::bind()
+{
+    glBindVertexArray(id);
 };
 
-#endif
+void VertexArrayObject::unbind()
+{
+    glBindVertexArray(0);
+}
+
+void VertexArrayObject::add(
+    VertexBufferObject& vbo, // VBO to attach
+    GLuint index,            // Attribute position (for shader `in`)
+    GLint size,              // Number of array elements per attribute
+    GLenum type,             // Array element type
+    GLboolean normalized,    // Whether to normalize
+    GLsizei stride,          // Distance between starting bytes of consecutive attributes
+    const GLvoid* offset)    // Offset of first attribute in buffer
+{
+    this->bind();
+    vbo.bind();
+    glVertexAttribPointer(index, size, type, normalized, stride, offset);
+    glEnableVertexAttribArray(index);
+    this->unbind();
+}

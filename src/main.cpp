@@ -5,9 +5,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "shader.cpp"
-#include "vbo.cpp"
-#include "vao.cpp"
+#include "shader.h"
+#include "vbo.h"
+#include "vao.h"
 
 // -----------------------------------------------------------------------------
 // GLOBALS

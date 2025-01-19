@@ -37,6 +37,8 @@ add_executable(glamdoll)
 target_sources(glamdoll PRIVATE
   src/main.cpp
   src/shader.cpp
+  src/vao.cpp
+  src/vbo.cpp
   ${glad_SOURCE_DIR}/src/glad.c
 )
 
@@ -52,6 +54,7 @@ target_link_libraries(glamdoll PRIVATE glfw)
 
 # Locate header file include directories
 target_include_directories(glamdoll PRIVATE
+  ${CMAKE_SOURCE_DIR}/include
   ${glad_SOURCE_DIR}/include
   ${glm_SOURCE_DIR}/
 )
