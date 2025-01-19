@@ -6,8 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "shader.h"
-#include "vbo.h"
 #include "vao.h"
+#include "vbo.h"
 
 // -----------------------------------------------------------------------------
 // GLOBALS

@@ -2,6 +2,7 @@
 #define VERTEXARRAYOBJECT_H
 
 #include <glad/glad.h>
+
 #include "vbo.h"
 
 class VertexArrayObject

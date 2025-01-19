@@ -1,12 +1,10 @@
 #include "shader.h"
 
-#include <glm/gtc/type_ptr.hpp>
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-
+#include <glm/gtc/type_ptr.hpp>
 
 // Read, compile, and link source code
 void Shader::create(const char* vertSourceFilePath, const char* fragSourceFilePath)
