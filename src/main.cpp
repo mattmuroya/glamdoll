@@ -258,6 +258,12 @@ int main()
     // -------------------------------------------------------------------------
     while (!glfwWindowShouldClose(window))
     {
+        // MacOS fullscreen bug workaround (https://github.com/glfw/glfw/issues/2251)
+        // Entering fullscreen doesn't trigger framebuffer or position callback
+#ifdef __APPLE__
+        window_pos_callback(window, 0, 0);
+#endif
+
         // Get inputs
         processInput(window);
 
