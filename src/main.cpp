@@ -17,12 +17,18 @@
 
 const int INIT_WINDOW_SIZE = 600;
 
+float fov = 70.0f;
+float aspect = 1.0f;
+float near = 1.0f;
+float far = 1000.0;
+
 // -----------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 // -----------------------------------------------------------------------------
 
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void window_pos_callback(GLFWwindow*, int, int);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 void resizeViewport(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
@@ -66,6 +72,7 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetWindowPosCallback(window, window_pos_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     // -------------------------------------------------------------------------
     // Load and verify GLAD (OpenGL function pointers)
@@ -105,9 +112,12 @@ int main()
     vao.add(colorVbo, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
     vao.add(normalVbo, 2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
 
+
+
     // -------------------------------------------------------------------------
     // Render loop
     // -------------------------------------------------------------------------
+
     while (!glfwWindowShouldClose(window))
     {
         // MacOS fullscreen bug workaround (https://github.com/glfw/glfw/issues/2251)
@@ -160,7 +170,7 @@ int main()
 
         // ===== Projection =====
 
-        glm::mat4 projectionMatrix = glm::perspective(glm::radians(70.f), 1.0f, 0.1f, 1000.f);
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(fov), aspect, near, far);
 
         // Set projection matrix
         shader.setMat4("uProjectionMatrix", projectionMatrix);
@@ -202,6 +212,14 @@ void window_pos_callback(GLFWwindow* window, int xpos, int ypos)
     glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
 
     resizeViewport(window, fbWidth, fbHeight);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    fov -= (float)yoffset;
+
+    if (fov < 0) fov = 0;
+    if (fov > 170) fov = 170;
 }
 
 void resizeViewport(GLFWwindow* window, int fbWidth, int fbHeight)
