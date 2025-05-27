@@ -177,10 +177,10 @@ int main()
         shader.setMat4("uProjectionMatrix", projectionMatrix);
 
         // ===== Set uniforms =====
-        shader.setFloat("uKa", 0.2f);
-        shader.setFloat("uKd", 0.8f);
-        shader.setFloat("uKs", 0.4f);
-        shader.setFloat("uSh", 0.9f);
+        shader.setFloat("uKa", 0.8f);
+        shader.setFloat("uKd", 0.2f);
+        shader.setFloat("uKs", 0.2f);
+        shader.setFloat("uSh", 1.0f);
 
         // ===== Render =====
 
