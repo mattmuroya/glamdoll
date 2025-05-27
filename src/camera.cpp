@@ -1,3 +1,5 @@
+#include <glm/glm.hpp>
+
 #include "camera.h"
 
 glm::mat4 Camera::getViewMatrix()
