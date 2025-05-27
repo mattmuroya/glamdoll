@@ -5,8 +5,12 @@ at [LearnOpenGL.com](https://learnopengl.com/) and Dr. Mike Bailey's project
 sample for [CS 450](https://web.engr.oregonstate.edu/~mjb/cs550/) at Oregon
 State University.
 
-<p align="center" style="max-width: 400px">
-  <img src="assets/images/the-cube.png" alt="Before time began, there was the cube. "/>
+<p align="center">
+  <img
+    src="assets/images/the-cube.png"
+    alt="Before time began, there was the cube."
+    width="600px"
+  />
 </p>
 
 ## Dependencies
