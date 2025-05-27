@@ -7,6 +7,7 @@
 
 #include "cube.h"
 
+#include "camera.h"
 #include "shader.h"
 #include "vao.h"
 #include "vbo.h"
@@ -112,7 +113,11 @@ int main()
     vao.add(colorVbo, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
     vao.add(normalVbo, 2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
 
+    // -------------------------------------------------------------------------
+    // Initialize camera
+    // -------------------------------------------------------------------------
 
+    Camera camera;
 
     // -------------------------------------------------------------------------
     // Render loop
@@ -159,14 +164,10 @@ int main()
 
         // ===== Set camera =====
 
-        glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f); // Camera position
-        glm::vec3 cameraDir = glm::vec3(0.0f, 0.0f, 0.0f); // Target position
-        glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); // Up vector
-
-        glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraDir, cameraUp);
+        // TODO: Use globals to track and set camera position/target
 
         // Set view matrix
-        shader.setMat4("uViewMatrix", viewMatrix);
+        shader.setMat4("uViewMatrix", camera.getViewMatrix());
 
         // ===== Projection =====
 

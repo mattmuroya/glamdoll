@@ -36,6 +36,7 @@ add_executable(glamdoll)
 # Locate C/C++ source files
 target_sources(glamdoll PRIVATE
   src/main.cpp
+  src/camera.cpp
   src/shader.cpp
   src/vao.cpp
   src/vbo.cpp
