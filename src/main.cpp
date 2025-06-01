@@ -23,12 +23,16 @@ float aspect = 1.0f;
 float near = 1.0f;
 float far = 1000.0;
 
+float xRot = 0.0f, yRot = 0.0f;
+float xMouse = 0.0f, yMouse = 0.0f;
+
 // -----------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 // -----------------------------------------------------------------------------
 
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void window_pos_callback(GLFWwindow*, int, int);
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 void resizeViewport(GLFWwindow*, int, int);
@@ -73,6 +77,7 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetWindowPosCallback(window, window_pos_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
     // -------------------------------------------------------------------------
@@ -151,10 +156,18 @@ int main()
         // ===== Model =====
 
         // Identity matrix
-        glm::mat4 modelMatrix = glm::mat4(1.f);
+        glm::mat4 modelMatrix = glm::mat4(1.0f);
 
-        // Scale, Rotate, Translate
-        modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        // Scale
+        // modelMatrix = glm::scale(modelMatrix, glm::vec3(Scale, Scale, Scale));
+
+        // Rotate
+        // modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f)); // Auto rotate
+        modelMatrix = glm::rotate(modelMatrix, (float)glm::radians(xRot), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around x-axis
+        modelMatrix = glm::rotate(modelMatrix, (float)glm::radians(yRot), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around y-axis
+
+        // Translate
+        // modelMatrix = glm::translate(modelMatrix, glm::vec3(-GRID_SIZE / (float)2, 0, -GRID_SIZE / (float)2));
 
         // Set model matrix
         shader.setMat4("uModelMatrix", modelMatrix);
@@ -217,6 +230,21 @@ void window_pos_callback(GLFWwindow* window, int xpos, int ypos)
     glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
 
     resizeViewport(window, fbWidth, fbHeight);
+}
+
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    {
+        int dx = xpos - xMouse;
+        int dy = ypos - yMouse;
+
+        xRot += dy; // Vertical mouse movement -> rotation around x-axis
+        yRot += dx; // Horizontal mouse movement -> rotation around y-axis
+    }
+
+    xMouse = xpos;
+    yMouse = ypos;
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
