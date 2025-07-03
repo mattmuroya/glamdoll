@@ -20,8 +20,8 @@ const int INIT_WINDOW_SIZE = 600;
 
 float fov = 70.0f;
 float aspect = 1.0f;
-float near = 1.0f;
-float far = 1000.0;
+float nearPlane = 1.0f;
+float farPlane = 1000.0;
 
 float xRot = 0.0f, yRot = 0.0f;
 float xMouse = 0.0f, yMouse = 0.0f;
@@ -188,7 +188,7 @@ int main()
 
         // ===== Projection =====
 
-        glm::mat4 projectionMatrix = glm::perspective(glm::radians(fov), aspect, near, far);
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(fov), aspect, nearPlane, farPlane);
 
         // Set projection matrix
         shader.setMat4("uProjectionMatrix", projectionMatrix);
@@ -236,15 +236,15 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
-        int dx = xpos - xMouse;
-        int dy = ypos - yMouse;
+        int dx = (float)xpos - xMouse;
+        int dy = (float)ypos - yMouse;
 
         xRot += dy; // Vertical mouse movement -> rotation around x-axis
         yRot += dx; // Horizontal mouse movement -> rotation around y-axis
     }
 
-    xMouse = xpos;
-    yMouse = ypos;
+    xMouse = (float)xpos;
+    yMouse = (float)ypos;
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
